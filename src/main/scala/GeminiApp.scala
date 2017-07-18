@@ -1,7 +1,7 @@
-import data.ItemRepository
+import data.{ItemRepository, RealItemRepository}
 import entities.{Apple, Orange}
 import formatters.OutputFormatter
-import pricers.{Step1Pricer, StepPricer}
+import pricers.{Step1Pricer, Step2Pricer, StepPricer}
 
 object GeminiApp {
 
@@ -11,13 +11,23 @@ object GeminiApp {
     * through a pricer
     *
     *  @param args the array of strings
-    *  @param repo this implicit is the ItemRepository which holds the item information (such as price)
-    *              The repo does not hold any pricers though, it is RAW item information, and would come
-    *              from a database (say) in a real world example
-    *
     *  @return  a String representing the cost
     */
-  def main(args: Array[String])(implicit stepPricer:StepPricer) : String  = {
+  def main(args: Array[String]): Unit  = {
+    run(args)(new Step2Pricer(new RealItemRepository))
+  }
+
+
+  /** Takes an array of strings, and will verify that there is at least one item, and that
+    * the values are either 'apple' or 'orange'. Then it will group the items and run them
+    * through a pricer
+    *
+    *  @param args the array of strings
+    *  @param stepPricer this implicit is the StepPricer which is the current pricer that can be
+    *                    used to obtain final item prices
+    *  @return  a String representing the cost
+    */
+  def run(args: Array[String])(implicit stepPricer:StepPricer) : String  = {
 
     if(args.length ==0)
       throw new IllegalStateException("Must have some command line args")
@@ -41,24 +51,3 @@ object GeminiApp {
     finalPrice
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

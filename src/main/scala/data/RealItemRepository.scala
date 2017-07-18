@@ -11,7 +11,7 @@ class RealItemRepository extends ItemRepository {
   private val theItems = Map("apple" -> 60, "orange" -> 25)
 
 
-  def getItemCost(itemName: String): Int = {
+  def getItemCost(itemName: String): BigDecimal = {
     theItems(itemName)
   }
 }
