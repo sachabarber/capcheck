@@ -9,7 +9,8 @@ class OrangeOfferPricer extends ItemPricer {
     val offerNumber = 3
     val withinOffer = Math.floor(quantityOfItem/offerNumber).toInt * offerNumber
     val outsideOffer = quantityOfItem - withinOffer
-    val ratio = singleItemPrice * 0.66
-    (withinOffer * ratio) + (outsideOffer * singleItemPrice)
+    val ratio = 2.0/3.0
+    val adjusted = singleItemPrice * ratio
+    (withinOffer * adjusted) + (outsideOffer * singleItemPrice)
   }
 }

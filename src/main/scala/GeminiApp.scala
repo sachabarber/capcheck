@@ -33,8 +33,8 @@ object GeminiApp {
       throw new IllegalStateException("Must have some command line args")
 
     val convertedItems = args.map(_.toLowerCase()).map {
-      case "apple" => new Apple("apple")
-      case "orange" => new Orange("apple")
+      case "apple" => new Apple()
+      case "orange" => new Orange()
       case _ => throw new IllegalStateException("Only 'apple' and 'orange' is allowed as argument")
     }.toList
 

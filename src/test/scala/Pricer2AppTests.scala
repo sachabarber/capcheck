@@ -10,16 +10,17 @@ class Pricer2AppTests extends FlatSpec {
   // supply a real implementation or a Mock (Mockito)
   // saved us messing around with Cake pattern
   implicit val pricer = new Step2Pricer(new RealItemRepository)
+  val ratio = 2.0/3.0
 
   "valid set of 3 for 2 oranges" should "calculate ok" in {
     val finalPrice = GeminiApp.run(List[String]("orange", "orange", "orange").toArray)
-    val totalOrangePrice : BigDecimal = ((3 * 25) * 0.66)
+    val totalOrangePrice : BigDecimal = ((3 * 25) * ratio)
     assert(finalPrice === OutputFormatter.formatOutput(totalOrangePrice))
   }
 
   "valid set of 3 for 2 oranges + 1 extra orange" should "calculate ok" in {
     val finalPrice = GeminiApp.run(List[String]("orange", "orange", "orange", "orange").toArray)
-    val totalOrangePrice : BigDecimal = ((3 * 25) * 0.66) + 25
+    val totalOrangePrice : BigDecimal = ((3 * 25) * ratio) + 25
     assert(finalPrice === OutputFormatter.formatOutput(totalOrangePrice))
   }
 
@@ -29,6 +30,12 @@ class Pricer2AppTests extends FlatSpec {
     assert(finalPrice === OutputFormatter.formatOutput(totalApplePrice))
   }
 
+  "mixed bag of offers" should "calculate ok" in {
+    val finalPrice = GeminiApp.run(List[String]("apple", "apple", "orange", "orange", "orange").toArray)
+    val totalApplePrice : BigDecimal = ((2 * 60) * 0.5)
+    val totalOrangePrice : BigDecimal = ((3 * 25) * ratio)
+    assert(finalPrice === OutputFormatter.formatOutput(totalApplePrice + totalOrangePrice))
+  }
 
 
 }
