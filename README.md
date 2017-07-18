@@ -1,2 +1,2 @@
 # capcheck
-simple checkout
+simple checkout written in scala
